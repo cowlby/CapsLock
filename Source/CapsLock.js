@@ -20,8 +20,8 @@ var capsOn = null,
     target = (Browser.Engine.trident) ? document : window;
 
 /**
- * Figure out if caps lock is on by going through the permutations of lower/upper
- * case letters with shift key pressed or not pressed. Once we know if it is on/off,
+ * Figure out if caps lock is on by checking for a lower case letter with shift
+ * pressed or an uppercase letter without shift. Once we know if it is on/off,
  * remove the event listener.
  */
 function checkCapsKey(event) {
@@ -37,52 +37,72 @@ function checkCapsKey(event) {
 }
 
 /**
- * Handle the caps lock key presses. If it's Safari 3+, keyup means caps lock is
- * off and keydown means caps lock is on. Otherwise just toggle the value of capsOn.
+ * If user moves away from the window, we can't tell what happened with the caps
+ * key when he returns so we reset the caps checker.
+ */
+window.addEvent('blur', function(event) {
+	capsOn = null;
+	target.addEvent('keypress', checkCapsKey);
+});
+
+/**
+ * Checks an event for caps lock key presses. If it's Safari 3+, keyup means caps lock
+ * is off and keydown means caps lock is on. Otherwise just toggle the value of capsOn.
  */
 function checkCapsPress(event) {
 	if (event.code == 20 && capsOn !== null) {
 		if (Browser.Engine.webkit && Browser.Engine.version > 420) {
-			console.count();
 			capsOn = (event.event.type == 'keydown');
 		} else {
 			if (event.event.type == 'keydown') {
 				capsOn = !capsOn;
 			}
 		}
-		
-		if (capsOn) {
-			window.fireEvent('capsLockOn');
-			document.fireEvent('capsLockOn');
-		} else {
-			window.fireEvent('capsLockOff');
-			document.fireEvent('capsLockOff');
-		}
 	}
 }
 
 /**
- * Re-attaches the event listener to check if caps lock is on/off. Used when user
- * moves away from the window since we have no way of checking what he does with the
- * caps key at that point.
+ * Add events to the target to monitor for caps lock key presses and to do
+ * the initial caps lock key sniffing.
  */
-function resetCapsKey(event) {
-	capsOn = null;
-	target.addEvent('keypress', checkCapsKey);
-}
-
 target.addEvents({
 	'keyup': checkCapsPress,
 	'keydown': checkCapsPress,
 	'keypress': checkCapsKey
 });
-window.addEvent('blur', resetCapsKey);
 
-Event.implement({
-	hasCapsLock: function(event) {
-		return capsOn;
+Event.implement({ hasCapsLock: function(event) { return capsOn; } });
+
+Element.Events.capsLockOn = {
+	base: 'keydown',
+	condition: function(event) {
+		if (event.code == 20) {
+			if (Browser.Engine.webkit && Browser.Engine.version > 420) {
+				return true;
+			} else if (capsOn !== null) {
+				return !capsOn;	
+			}
+		} else if (capsOn !== null) {
+			return event.hasCapsLock();
+		}
 	}
-});
+};
 
+Element.Events.capsLockOff = {
+	base: (Browser.Engine.webkit) ? 'keyup' : 'keydown',
+	condition: function(event) {
+		if (event.code == 20) {
+			if (Browser.Engine.webkit && Browser.Engine.version > 420) {
+				return true;
+			} else if (capsOn !== null) {
+				if (capsOn === true) {
+					return true;
+				}
+			}
+		} else if (capsOn !== null) {
+			return !event.hasCapsLock();
+		}
+	}
+};
 
 })();

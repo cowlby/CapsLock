@@ -8,23 +8,15 @@
 		window.addEvent('domready', function() {
 			var el = document.id('capsnotice');
 			
-			function capsOn()  { el.set('text', 'Caps lock is on.'); }
+			function capsOn()  { el.set('text', 'Caps On.'); }
 			function capsOff() { el.set('text', ''); }
 			
 			document.id('password').addEvents({
-				'blur': function(event) {
-					capsOff();
-					window.removeEvents({
-						'capsLockOn': capsOn,
-						'capsLockOff': capsOff
-					});
-				},
+				'capsLockOn': capsOn,
+				'capsLockOff': capsOff,
+				'blur': capsOff,
 				'focus': function(event) {
 					if (event.hasCapsLock()) { capsOn(); }
-					window.addEvents({
-						'capsLockOn': capsOn,
-						'capsLockOff': capsOff
-					});
 				}
 			});
 			
