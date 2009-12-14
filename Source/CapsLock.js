@@ -1,11 +1,13 @@
 /*
 ---
-
 script: CapsLock.js
 
 description: Set of custom events to check if the caps lock key is enabled.
 
-license: MIT-style license.
+license: MIT-style
+
+authors:
+- Jose Prado
 
 requires:
   core/1.2.4: [Event, Element.Event]
