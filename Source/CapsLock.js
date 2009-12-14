@@ -1,7 +1,5 @@
 /*
 ---
-script: CapsLock.js
-
 description: Set of custom events to check if the caps lock key is enabled.
 
 license: MIT-style
