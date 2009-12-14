@@ -1,0 +1,54 @@
+<html>
+
+<head>
+	<title>CapsLock Demo</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js" type="text/javascript" charset="utf-8"></script>
+	<script src="Source/CapsLock.js?ver=1.0" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			var el = document.id('capsnotice');
+			
+			document.id('password').addEvent('capsLockOn', function(event) {
+				el.set('text', 'Caps lock is on.')
+			});
+			
+			document.id('password').addEvent('capsLockOff', function(event) {
+				el.set('text', '');
+			})
+		});
+	</script>
+	<link rel="stylesheet" href="assets/base.css" type="text/css" media="screen" />
+	<style type="text/css">
+	form {
+		width: 500px;
+		margin: 0 auto;
+		text-align: center;
+	}
+	</style>
+</head>
+
+<body>
+	<form>
+		<fieldset>
+			<legend>Login</legend>
+			<p>The Caps Lock key notice will appear next to the password field.</p>
+			<table>
+				<tbody>
+					<tr>
+						<td class="label"><label for="username">Username:</label></td>
+						<td><input type="text" id="username" name="username" class="title" /></td>
+					</tr>
+					<tr>
+						<td class="label"><label for="password">Password:</label></td>
+						<td>
+							<input type="password" id="password" name="password" class="title" />
+							<span id="capsnotice" class="warning"></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+	</form>
+</body>
+
+</html>
