@@ -1,13 +1,13 @@
 CapsLock
---------
+========
 
 CapsLock gives you a couple of new events which you can use to check if the caps lock key is turned on. It works by first sniffing the state of the caps lock key based on the output of key presses. Once the state is established, it switches to check only presses of the caps lock key which toggle the state. This gives CapsLock an advantage over many of the caps lock checkers out there since feedback can be provided to the user as soon as the caps lock key is pressed, not after their input which is a limit of keycode sniffers.
 
 ![Screenshot](http://pradador.com/images/mootools/capslock.screenshot.jpg)
 
 
-How to Use
-==========
+How to use
+----------
 
 There are two ways to use the plugin. First off, every Event object will have a hasCapsLock method which returns the status of the caps lock key. True means caps lock is on, false means caps lock is off, and null means CapsLock can't determine the status safely yet.
 
@@ -44,7 +44,7 @@ The second way is by using the new Element events created by CapsLock: capsLockO
 	
 
 Known Issues
-============
+------------
 
 Since CapsLock has to first sniff the state of the caps lock key, there can be a delay between user input being able to provide feedback via the events. Specifically, until there is a keypress event where the user types in a lowercase letter with shift pressed down or they type in an uppercase letter without shift, these events won't fire.
 
