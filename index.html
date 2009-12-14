@@ -6,17 +6,31 @@
 	<script src="Source/CapsLock.js?ver=1.0" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		window.addEvent('domready', function() {
-			var el = document.id('capsnotice');
+			var pass = document.id('passcapsnotice'),
+			    user = document.id('usercapsnotice');
 			
-			function capsOn()  { el.set('text', 'Caps On.'); }
-			function capsOff() { el.set('text', ''); }
+			function passCapsOn()  { pass.setStyle('display', 'block'); }
+			function passCapsOff() { pass.setStyle('display', 'none'); }
+			
+			function userCapsOn()  { user.setStyle('display', 'block'); }
+			function userCapsOff() { user.setStyle('display', 'none'); }
+			
+			
+			document.id('username').addEvents({
+				'capsLockOn': userCapsOn,
+				'capsLockOff': userCapsOff,
+				'blur': userCapsOff,
+				'focus': function(event) {
+					if (event.hasCapsLock()) { userCapsOn(); }
+				}
+			});
 			
 			document.id('password').addEvents({
-				'capsLockOn': capsOn,
-				'capsLockOff': capsOff,
-				'blur': capsOff,
+				'capsLockOn': passCapsOn,
+				'capsLockOff': passCapsOff,
+				'blur': passCapsOff,
 				'focus': function(event) {
-					if (event.hasCapsLock()) { capsOn(); }
+					if (event.hasCapsLock()) { passCapsOn(); }
 				}
 			});
 			
@@ -27,7 +41,14 @@
 	form {
 		width: 500px;
 		margin: 0 auto;
-		text-align: center;
+	}
+	.label { width: 60px; }
+	.field { width: 260px; }
+	.notice {
+		display: none;
+		line-height: 2em;
+		margin-top: .5em;
+		padding: 0;
 	}
 	</style>
 </head>
@@ -36,19 +57,18 @@
 	<form>
 		<fieldset>
 			<legend>Login</legend>
-			<p>The Caps Lock key notice will appear next to the password field.</p>
+			<p>Test out the caps lock notifiers by typing in some data with the caps lock on or off. The caps lock state should be preserved across focus changes and should change when you hit the caps lock key unlike other caps lock checkers out there.</p>
 			<table>
 				<tbody>
 					<tr>
 						<td class="label"><label for="username">Username:</label></td>
-						<td><input type="text" id="username" name="username" class="title" /></td>
+						<td class="field"><input type="text" id="username" name="username" class="title" /></td>
+						<td><span id="usercapsnotice" class="notice">Caps On.</span></td>
 					</tr>
 					<tr>
 						<td class="label"><label for="password">Password:</label></td>
-						<td>
-							<input type="password" id="password" name="password" class="title" />
-							<span id="capsnotice" class="warning"></span>
-						</td>
+						<td class="field"><input type="password" id="password" name="password" class="title" /></td>
+						<td><span id="passcapsnotice" class="notice">Caps On.</span></td>
 					</tr>
 				</tbody>
 			</table>
