@@ -10,7 +10,7 @@ authors:
 - Jose Prado
 
 requires:
-  core/1.2.4: [Event, Element.Event]
+  core/1.2.4: [Browser, Event, Element.Event]
 
 provides: [Event.hasCapsLock, capsLockOn, capsLockOff]
 
