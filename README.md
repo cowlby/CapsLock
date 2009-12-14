@@ -20,10 +20,13 @@ There are two ways to use the plugin. First off, every Event object will have a 
 	
 The second way is by using the new Element events created by CapsLock: capsLockOn and capsLockOff. You can attach listeners to any element and these will fire when the caps lock is enabled/disabled. Use them in pairs to show/hide notifications about the state of the caps lock key.
 
+If you have some elements like this:
+
 	#HTML
 	<input type="password" id="password" />
 	<div id="capsWarn"></div>
-	
+
+Use MooTools like this:	
 	
 	#JS
 	function warnCapsOn() { document.id('capsWarn').set('text', 'Caps lock key is on.'); }
