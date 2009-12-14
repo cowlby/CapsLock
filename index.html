@@ -1,1 +1,81 @@
-My GitHub Page
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+<head>
+	<title>CapsLock Demo</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js" type="text/javascript" charset="utf-8"></script>
+	<script src="Compressed/CapsLock.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			var pass = document.id('passcapsnotice'),
+			    user = document.id('usercapsnotice');
+			
+			function passCapsOn()  { pass.setStyle('display', 'block'); }
+			function passCapsOff() { pass.setStyle('display', 'none'); }
+			
+			function userCapsOn()  { user.setStyle('display', 'block'); }
+			function userCapsOff() { user.setStyle('display', 'none'); }
+			
+			
+			document.id('username').addEvents({
+				'capsLockOn': userCapsOn,
+				'capsLockOff': userCapsOff,
+				'blur': userCapsOff,
+				'focus': function(event) {
+					if (event.hasCapsLock()) { userCapsOn(); }
+				}
+			});
+			
+			document.id('password').addEvents({
+				'capsLockOn': passCapsOn,
+				'capsLockOff': passCapsOff,
+				'blur': passCapsOff,
+				'focus': function(event) {
+					if (event.hasCapsLock()) { passCapsOn(); }
+				}
+			});
+			
+		});
+	</script>
+	<link rel="stylesheet" href="assets/base.css" type="text/css" media="screen" />
+	<style type="text/css">
+	form {
+		width: 500px;
+		margin: 0 auto;
+	}
+	.label { width: 60px; }
+	.field { width: 260px; }
+	.notice {
+		display: none;
+		line-height: 2em;
+		margin-top: .5em;
+		padding: 0;
+	}
+	</style>
+</head>
+
+<body>
+	<form>
+		<fieldset>
+			<legend>Login</legend>
+			<p>Test out the caps lock notifiers by typing in some data with the caps lock on or off. The caps lock state should be preserved across focus changes and should change when you hit the caps lock key unlike other caps lock checkers out there.</p>
+			<table>
+				<tbody>
+					<tr>
+						<td class="label"><label for="username">Username:</label></td>
+						<td class="field"><input type="text" id="username" name="username" class="title" /></td>
+						<td><span id="usercapsnotice" class="notice">Caps On.</span></td>
+					</tr>
+					<tr>
+						<td class="label"><label for="password">Password:</label></td>
+						<td class="field"><input type="password" id="password" name="password" class="title" /></td>
+						<td><span id="passcapsnotice" class="notice">Caps On.</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+	</form>
+</body>
+
+</html>
