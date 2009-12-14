@@ -23,8 +23,8 @@ The second way is by using the new Element events created by CapsLock: capsLockO
 	#HTML
 	<input type="password" id="password" />
 	<div id="capsWarn"></div>
-
-
+	
+	
 	#JS
 	function warnCapsOn() { document.id('capsWarn').set('text', 'Caps lock key is on.'); }
 	function removeWarn() { document.id('capsWarn').set('text', ''); }
