@@ -43,6 +43,7 @@ function checkCapsKey(event) {
 function checkCapsPress(event) {
 	if (event.code == 20 && capsOn !== null) {
 		if (Browser.Engine.webkit && Browser.Engine.version > 420) {
+			console.count();
 			capsOn = (event.event.type == 'keydown');
 		} else {
 			if (event.event.type == 'keydown') {
@@ -83,18 +84,5 @@ Event.implement({
 	}
 });
 
-Element.Events.capsLockOn = {
-	base: 'keydown',
-	condition: function(event) {
-		return capsOn;
-	}
-}
-
-Element.Events.capsLockOff = {
-	base: 'keydown',
-	condition: function(event) {
-		return !capsOn;
-	}
-}
 
 })();
