@@ -1,5 +1,7 @@
 /*
 ---
+script: CapsLock.js
+
 description: Set of custom events to check if the caps lock key is enabled.
 
 license: MIT-style
@@ -10,7 +12,7 @@ authors:
 requires:
   core/1.2.4: [Browser, Event, Element.Event]
 
-provides: [Event.hasCapsLock, capsLockOn, capsLockOff]
+provides: [CapsLock]
 
 ...
 */
