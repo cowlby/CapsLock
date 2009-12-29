@@ -18,6 +18,7 @@ provides: [CapsLock]
 */
 (function() {
 
+Browser.CapsLock = null;
 var capsOn = null,
     target = (Browser.Engine.trident) ? document : window;
 
@@ -28,9 +29,9 @@ var capsOn = null,
  */
 function checkCapsKey(event) {
 	if (event.code > 64 && event.code < 91) { // Capital Letters
-		capsOn = (event.shift) ? null : true;
+		Browser.CapsLock = capsOn = (event.shift) ? null : true;
 	} else if (event.code > 96 && event.code < 123) { // Lower-case Letters
-		capsOn = (event.shift) ? true : false;
+		Browser.CapsLock = capsOn = (event.shift) ? true : false;
 	}
 	
 	if (capsOn !== null) {
@@ -43,7 +44,7 @@ function checkCapsKey(event) {
  * key when he returns so we reset the caps checker.
  */
 window.addEvent('blur', function(event) {
-	capsOn = null;
+	Browser.CapsLock = capsOn = null;
 	target.addEvent('keypress', checkCapsKey);
 });
 
@@ -54,10 +55,10 @@ window.addEvent('blur', function(event) {
 function checkCapsPress(event) {
 	if (event.code == 20 && capsOn !== null) {
 		if (Browser.Engine.webkit && Browser.Engine.version > 420) {
-			capsOn = (event.event.type == 'keydown');
+			Browser.CapsLock = capsOn = (event.event.type == 'keydown');
 		} else {
 			if (event.event.type == 'keydown') {
-				capsOn = !capsOn;
+				Browser.CapsLock = capsOn = !capsOn;
 			}
 		}
 	}
@@ -97,9 +98,7 @@ Element.Events.capsLockOff = {
 			if (Browser.Engine.webkit && Browser.Engine.version > 420) {
 				return true;
 			} else if (capsOn !== null) {
-				if (capsOn === true) {
-					return true;
-				}
+				return (capsOn === true);
 			}
 		} else if (capsOn !== null) {
 			return !event.hasCapsLock();
