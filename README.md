@@ -9,7 +9,7 @@ CapsLock gives you a couple of new events which you can use to check if the caps
 How to use
 ----------
 
-There are two ways to use the plugin. First off, every Event object will have a hasCapsLock method which returns the status of the caps lock key. True means caps lock is on, false means caps lock is off, and null means CapsLock can't determine the status safely yet.
+There are a few to use the plugin. First off, every Event object will have a hasCapsLock method which returns the status of the caps lock key. True means caps lock is on, false means caps lock is off, and null means CapsLock can't determine the status safely yet.
 
 	#JS
 	document.id('myTextInput').addEvent('keydown', function(event) {
@@ -44,6 +44,8 @@ Use MooTools like this:
 			if (event.hasCapsLock()) { warnCapsOn(); }
 		}
 	});
+	
+Finally, at any moment you can check the Browser.CapsLock property to determine the status of the Caps Lock key. This way you can check the Caps Lock key without the need for an event to fire first.
 	
 
 Known Issues
